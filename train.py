@@ -39,11 +39,11 @@ from sklearn.preprocessing import MinMaxScaler
 from utils import (IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH, create_sequences,
                    load_pickle, prepare_data)
 
-DATA = os.path.join("data", "part1.pkl")
+DATA = os.path.join("data", "training_data.pkl")
 MODEL_NAME = "deepbot"
 WEIGHTS_DIR = "model_weights"
 
-TRAIN_SIZE = 0.8
+TRAIN_SIZE = 0.9
 
 SEQUENCE_LENGTH = 8
 BATCH_SIZE = 64
