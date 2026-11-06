@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="drone" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+  <link name="base_foot"></link>
+  <link name="base_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${base_radius}" length="${base_height}"/>
+        </geometry>
+        <material name="base">
+          <color rgba="0 1.0 0.0 1"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${base_radius}" length="${base_height}"/>
+        </geometry>
+      </collision>        
+      <xacro:cylinder_inertia m="${base_mass}" r="${base_radius}" h="${base_height}"/>
+    </link>
+  
+    <joint name="base_foot_joint" type="fixed">
+        <parent link="base_foot"/>
+        <child link="base_link"/>
+        <origin xyz="0.0 0.0 ${base_height/2.0}" rpy="0 0.0 0.0"/>
+    </joint>
+
+  <xacro:arm prefix="arm1" color="1.0 0.0 0.0 1.0" arm_angle="0" />
+  <xacro:arm prefix="arm3" color="0.0 0.0 1.0 1.0" arm_angle="${pi/2}" />
+  <xacro:arm prefix="arm4" color="1.0 0.0 0.0 1.0" arm_angle="${pi}" />
+  <xacro:arm prefix="arm2" color="0.0 0.0 1.0 1.0" arm_angle="${3*pi/2}" />
+
+
+</robot>

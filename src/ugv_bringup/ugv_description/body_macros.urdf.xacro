@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="body_macros">
+
+
+                            <!-- cylinder -->
+
+    <xacro:macro name='cylinder' params="n r l m c k xyz rpy">
+        <link name="${n}">
+            <visual>
+                <origin xyz="${xyz}" rpy="${rpy}"/>
+                <geometry> <cylinder radius="${r}" length="${l}"/> </geometry>
+                <material name="${c}"/>
+            </visual>
+            <xacro:cylinder_inertia m='${m}' r='${k * r}' h='${k * l}' xyz="${xyz}" rpy="${rpy}" />
+            <collision>
+                <origin xyz="${xyz}" rpy="${rpy}"/>
+                <geometry> <cylinder radius="${r}" length="${l}"/> </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+
+    
+</robot>

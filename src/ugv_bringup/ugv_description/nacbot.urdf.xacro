@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nacbot_description">
+
+
+
+    <link name="base_foot"></link>
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry> <box size="${base_length} ${base_width} ${base_height}"/> </geometry>
+            <material name="blue"/>
+        </visual>
+        <xacro:box_inertia m='${base_mass}' l='${correction * base_length}' w='${correction * base_width}' h='${correction * base_height}' xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <collision>
+            <origin xyz="0.0 0.0 ${wheel_radius*2.0}" rpy="0.0 0.0 0.0"/>
+            <geometry> <box size="${base_length} ${base_width} ${base_height}"/> </geometry>
+        </collision> 
+    </link> 
+    <joint name="base_foot_joint" type="fixed">
+        <parent link="base_foot"/>
+        <child link="base_link"/>
+        <origin xyz="0.0 0.0 ${wheel_radius*2.0 - axle_radius + rotary_length}" rpy="0 0.0 0.0"/>
+    </joint>
+
+
+
+    <xacro:cylinder n="mid_front_rotary" m='${rotary_mass}' r='${rotary_radius}' l='${rotary_length}' c="white" k='${correction*3.0}' xyz="0.0 0.0 -${rotary_length/2.0}" rpy="0.0 0.0 0.0"/>
+    <joint name="base_front_rotary_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="mid_front_rotary"/>
+        <origin xyz="${base_length/3.0} 0.0 -${base_height/2.0}" rpy="0 0.0 0.0"/>
+    </joint>
+
+    <xacro:cylinder n="front_axle" m='${axle_mass}' r='${axle_radius}' l='${axle_length}' c="green" k='${correction}' xyz="0.0 0.0 -${rotary_length}" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="base_front_joint" type="fixed">
+        <parent link="mid_front_rotary"/>
+        <child link="front_axle"/>
+        <origin xyz="0.0 0.0 -${axle_radius}" rpy="0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:cylinder n="front_right_wheel" m='${wheel_mass}' r='${wheel_radius}' l='${wheel_length}' c="black" k='${correction}' xyz="0.0 -${wheel_length/2.0} 0.0" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="front_axle_right_wheel_joint" type="continuous">
+        <parent link="front_axle"/>
+        <child link="front_right_wheel"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <origin xyz="0.0 -${axle_length/2.0} 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:cylinder n="front_left_wheel" m='${wheel_mass}' r='${wheel_radius}' l='${wheel_length}' c="black" k='${correction}' xyz="0.0 ${wheel_length/2.0} 0.0" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="front_axle_left_wheel_joint" type="continuous">
+        <parent link="front_axle"/>
+        <child link="front_left_wheel"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <origin xyz="0.0 ${axle_length/2.0} 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:cylinder n="mid_back_rotary" m='${rotary_mass}' r='${rotary_radius}' l='${rotary_length}' c="white" k='${correction}' xyz="0.0 0.0 -${rotary_length/2.0}" rpy="0.0 0.0 0.0"/>
+    <joint name="base_back_rotary_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="mid_back_rotary"/>
+        <origin xyz="-${base_length/3.0} 0.0 -${base_height/2.0}" rpy="0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:cylinder n="back_axle" m='${axle_mass}' r='${axle_radius}' l='${axle_length}' c="green" k='${correction}' xyz="0.0 0.0 -${rotary_length}" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="base_back_joint" type="fixed">
+        <parent link="mid_back_rotary"/>
+        <child link="back_axle"/>
+        <origin xyz="0.0 0.0 -${axle_radius}" rpy="0 0.0 0.0"/>
+    </joint>
+
+
+
+    <xacro:cylinder n="back_right_wheel" m='${wheel_mass}' r='${wheel_radius}' l='${wheel_length}' c="black" k='${correction}' xyz="0.0 -${wheel_length/2.0} 0.0" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="back_axle_right_wheel_joint" type="continuous">
+        <parent link="back_axle"/>
+        <child link="back_right_wheel"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <origin xyz="0.0 -${axle_length/2.0} 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:cylinder n="back_left_wheel" m='${wheel_mass}' r='${wheel_radius}' l='${wheel_length}' c="black" k='${correction}' xyz="0.0 ${wheel_length/2.0} 0.0" rpy="${pi/2.0} 0.0 0.0"/>
+    <joint name="back_axle_left_wheel_joint" type="continuous">
+        <parent link="back_axle"/>
+        <child link="back_left_wheel"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <origin xyz="0.0 ${axle_length/2.0} 0.0" rpy="0.0 0.0 0.0"/>
+    </joint> 
+
+
+</robot>

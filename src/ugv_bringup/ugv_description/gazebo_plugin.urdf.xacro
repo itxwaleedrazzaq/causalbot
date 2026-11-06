@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="test">
+
+                <!-- fixing colours in gazebo  -->
+  <gazebo reference='base_link'><material>Gazebo/Blue</material></gazebo>
+
+  <gazebo reference='mid_front_rotary'>
+  <material>Gazebo/White</material><material>Gazebo/White</material></gazebo>
+  <gazebo reference='front_axle'>
+    <material>Gazebo/Green</material>
+    <mu1 value='0.1'/>
+    <mu2 value='0.1'/>
+  </gazebo>
+  <gazebo reference='front_right_wheel'>
+    <material>Gazebo/Black</material>
+    <mu1 value='0.2'/>
+    <mu2 value='0.2'/>
+  </gazebo>
+  <gazebo reference='front_left_wheel'>
+    <material>Gazebo/Black</material>
+      <mu1 value='0.2'/>
+      <mu2 value='0.2'/>
+  </gazebo>
+  <gazebo reference='mid_back_rotary'>
+    <material>Gazebo/White</material>
+    <mu1 value='0.2'/>
+    <mu2 value='0.2'/>
+  </gazebo>
+  <gazebo reference='back_axle'><material>Gazebo/Green</material></gazebo>
+  <gazebo reference='back_right_wheel'>
+    <material>Gazebo/Black</material>
+    <mu1 value='0.2'/>
+    <mu2 value='0.2'/>
+  </gazebo>
+  <gazebo reference='back_left_wheel'>
+    <material>Gazebo/Black</material>
+    <mu1 value='0.2'/>
+    <mu2 value='0.2'/>
+  </gazebo>
+  <gazebo reference='camera_link'><material>Gazebo/Yellow</material></gazebo>
+
+      <!-- gazebo-plugin for diff drive controller -->
+
+  <gazebo>
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <namespace>/</namespace>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+
+      <update_rate>10.0</update_rate>
+
+      <num_wheel_pairs>2</num_wheel_pairs>
+
+      <!-- Front wheels -->
+      <left_joint>front_axle_left_wheel_joint</left_joint>
+      <right_joint>front_axle_right_wheel_joint</right_joint>
+
+      <!-- Back wheels-->
+      <left_joint>back_axle_left_wheel_joint</left_joint>
+      <right_joint>back_axle_right_wheel_joint</right_joint>
+
+      <wheel_separation>${axle_length + wheel_length}</wheel_separation>
+      <wheel_separation>${axle_length + wheel_length}</wheel_separation>
+
+      <wheel_diameter>${2.0 * wheel_radius}</wheel_diameter>
+      <wheel_diameter>${2.0 * wheel_radius}</wheel_diameter>
+
+      <max_wheel_torque>20.0</max_wheel_torque>
+      <max_wheel_acceleration>10.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_foot</robot_base_frame>
+    </plugin>
+  </gazebo>
+
+</robot>
