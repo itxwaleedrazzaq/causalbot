@@ -97,26 +97,26 @@ source ~/.bashrc
 
 ### 2. Launch Gazebo Simulations
 
-Launch Gazebo Classic with a selected world:
+Launch Gazebo Classic with a selected robot and world:
 
 ```bash
-ros2 launch deepbot_bringup gazebo.launch.py world:=<world_name>.world
+ros2 launch <robot>_bringup gazebo.launch.py world:=<world_name>.world
 ```
 
 For example:
 
 ```bash
-ros2 launch deepbot_bringup gazebo.launch.py world:=train.world
+ros2 launch ugv_bringup gazebo.launch.py world:=train.world
 ```
 
-Available world names are listed in [Available Environments](#available-environments).
+Available robots and world names are listed in [lists](#available-environments).
 
 ### 3. Record Data
 
 With the simulation running, start the data recorder:
 
 ```bash
-ros2 run deepbot_train data_recorder_node
+ros2 run causal_train data_recorder
 ```
 
 The node records data from the running ROS 2 simulation. Ensure the required simulation nodes and topics are active before recording. The output location and data format depend on the implementation and configuration of the recorder node.
@@ -126,7 +126,7 @@ The node records data from the running ROS 2 simulation. Ensure the required sim
 Run the data visualization node:
 
 ```bash
-ros2 run deepbot_train visualize_data_node
+ros2 run causal_train visualize_data
 ```
 
 Ensure the required data has been recorded and is available at the location expected by the visualization node.
@@ -136,13 +136,13 @@ Ensure the required data has been recorded and is available at the location expe
 Run a policy evaluation with the selected model and random seed:
 
 ```bash
-ros2 run deepbot_test test_ai_node --ros-args -p model:=<policy_name> -p seed:=<seed>
+ros2 run causal_test test_ai_node --ros-args -p model:=<policy_name> -p seed:=<seed>
 ```
 
 Example:
 
 ```bash
-ros2 run deepbot_test test_ai_node --ros-args -p model:=NAC -p seed:=42
+ros2 run causal_test test_ai_node --ros-args -p model:=LAN -p seed:=42
 ```
 
 - `model`: the policy identifier to evaluate.
@@ -155,16 +155,26 @@ Make sure the selected policy's model files, configuration, and other required r
 Run the focus map visualization node:
 
 ```bash
-ros2 run deepbot_test visualize_ai_node --ros-args -p model:=<policy_name>
+ros2 run causal_test gracam_visualize --ros-args -p model:=<policy_name>
 ```
 
 Example:
 
 ```bash
-ros2 run deepbot_test visualize_ai_node --ros-args -p model:=LAN
+ros2 run causal_test gracam_visualize --ros-args -p model:=LAN
 ```
 
 Replace `LAN` with the desired supported policy identifier. Focus maps can help inspect the attention patterns produced by the selected model. Their interpretation depends on the model architecture and visualization implementation.
+
+## Available Robots
+
+The following Gazebo world options are available:
+
+| Robot | Description |
+|---|---|
+| `uav` | Unmanned Aerial Vehicle |
+| `ugv` | Unmanned Ground Vehicle |
+
 
 ## Available Environments
 
@@ -174,23 +184,21 @@ The following Gazebo world options are available:
 |---|---|
 | `train` | Training environment |
 | `city` | City environment |
-| `meadows` | Meadows environment |
+| `forest` | Meadows environment |
 | `multiple` | Multiple configuration |
 | `moving` | Moving configuration |
 
 Launch any environment with:
 
 ```bash
-ros2 launch deepbot_bringup gazebo.launch.py world:=<world_name>.world
+ros2 launch <robot>_bringup <robot>.launch.py world:=<world_name>.world
 ```
 
 For example:
 
 ```bash
-ros2 launch deepbot_bringup gazebo.launch.py world:=city.world
+ros2 launch ugv_bringup ugv.launch.py world:=city.world
 ```
-
-Confirm that the corresponding `.world` file exists in the location expected by the launch file.
 
 ## Available Policies
 
@@ -207,13 +215,13 @@ The policy identifiers provided are:
 Example policy evaluation:
 
 ```bash
-ros2 run deepbot_test test_ai_node --ros-args -p model:=LAN -p seed:=42
+ros2 run causal_test test_ai --ros-args -p model:=LAN -p seed:=42
 ```
 
 Example focus map visualization:
 
 ```bash
-ros2 run deepbot_test visualize_ai_node --ros-args -p model:=LAN
+ros2 run causal_test gradcam_visualize --ros-args -p model:=LAN
 ```
 
 Use the exact identifiers supported by the nodes and available model files.
