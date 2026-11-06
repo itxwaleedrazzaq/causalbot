@@ -226,6 +226,4 @@ ros2 run causal_test gradcam_visualize --ros-args -p model:=LAN
 
 Use the exact identifiers supported by the nodes and available model files.
 
-## Citation
-
 
