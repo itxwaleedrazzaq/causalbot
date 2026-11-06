@@ -136,13 +136,13 @@ Ensure the required data has been recorded and is available at the location expe
 Run a policy evaluation with the selected model and random seed:
 
 ```bash
-ros2 run causal_test test_ai_node --ros-args -p model:=<policy_name> -p seed:=<seed>
+ros2 run causal_test test_ai --ros-args -p model:=<policy_name> -p seed:=<seed>
 ```
 
 Example:
 
 ```bash
-ros2 run causal_test test_ai_node --ros-args -p model:=LAN -p seed:=42
+ros2 run causal_test test_ai --ros-args -p model:=LAN -p seed:=42
 ```
 
 - `model`: the policy identifier to evaluate.
