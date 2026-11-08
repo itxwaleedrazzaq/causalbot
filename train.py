@@ -1,22 +1,3 @@
-#!/usr/bin/env python3
-"""Train the behavioural-cloning driving policy.
-
-Pipeline
---------
-    part1.pkl --(prepare_data: resize + YUV [+ train-time augmentation])
-              --(create_sequences: sliding windows of 8 frames)
-              -- build_model -- Adam/MSE -- best-val-loss checkpoint
-
-The train/validation split is *chronological*, not random: consecutive frames
-from one drive are highly correlated, so a shuffled split would leak nearly
-identical frames into both halves and report a validation loss that has nothing
-to do with generalisation.
-
-The architecture is chosen by ``TRAIN_POLICY`` and must match the corresponding
-entry in ``gradcam_visualize.py`` / ``test_ai.py``, otherwise the saved
-checkpoint will not describe the model the test node builds.
-"""
-
 import os
 import pickle
 
@@ -43,7 +24,7 @@ DATA = os.path.join("data", "training_data.pkl")
 MODEL_NAME = "deepbot"
 WEIGHTS_DIR = "model_weights"
 
-TRAIN_SIZE = 0.9
+TRAIN_SIZE = 0.8
 
 SEQUENCE_LENGTH = 8
 BATCH_SIZE = 64
